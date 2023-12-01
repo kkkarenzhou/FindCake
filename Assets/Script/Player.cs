@@ -4,62 +4,94 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int health = 3;
-    public int score; 
-    public Rigidbody2D myRigidbody; 
-    public Animator myAnimator;
-    public GameObject gameOverPanel;
+    public TextMeshProUGUI healthNow;
     public TextMeshProUGUI gameOverText;
-
+    public GameObject restart;
+    [HideInInspector]
+    public int score = 0;
+  
+    private Rigidbody2D myRigidbody; 
+    private Animator myAnimator;
+    private bool getCake = false;
+    private int totalscore = 20;
+    
     public void Start()
     {
-        gameOverPanel.SetActive(false);
+        //Debug.Log(healthNow.text);
+        healthNow.text = health.ToString();
+        myRigidbody = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
     }
 
     public void Update()
     {
-        float xVelocity = Mathf.Abs(myRigidbody.velocity.x);
-        myAnimator.SetFloat("xVelocity", xVelocity);
+        GameOver();
+        
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         Goal goal = collision.gameObject.GetComponent<Goal>();
 
         if (goal != null)
         {
             score = score + goal.points;
-            GameOver();
+
         }
+        if(collision.gameObject.tag == "Cake"){
+            getCake = true;
+            //Destroy(collision.gameObject);
+
+        }
+    
     }
 
-    public void IncrementScore()
-    {
-        score = score + 1;
-    }
 
     public void TakeDamage()
     {
-        // Step 1 - decrease health by 1
+        ColorChanger colorchanger = GetComponent<ColorChanger>();
+        colorchanger.ChangeSpriteColorForDuration(Color.red,1f);
         health = health - 1;
-        
-        // Step 2 - if health is zero, call GameOver()
-        if (health <= 0)
-        {
-            GameOver();
-        }
+        healthNow.text = health.ToString();
     }
 
     public void GameOver()
     {
+        
         if (health <= 0)
         {
+            Destroy(healthNow);
+            restart.SetActive(true);
+            gameOverText.enabled = true;
             gameOverText.text = "You died";
         }
-        else
-        {
-            gameOverText.text = "You win! Score: " + score;
+        else {
+            if(score == totalscore && getCake)
+            {
+                Destroy(healthNow);
+                restart.SetActive(true);
+                gameOverText.enabled = true;
+                gameOverText.text = "You got the cake with price " + score;
+            }
+            else if(!(score == totalscore) && getCake){
+                gameOverText.enabled = true;
+                gameOverText.text = "You don't have enough money for the cake";
+                Invoke("DisableText", 2f);
+
+            }
+
+
+
+
+
         }
 
-        gameOverPanel.SetActive(true);
+    }
+
+    void DisableText()
+    {
+        // Disable the Text component
+        gameOverText.enabled = false;
+        getCake = false;
     }
 }

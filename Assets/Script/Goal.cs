@@ -5,4 +5,9 @@ using UnityEngine;
 public class Goal : MonoBehaviour
 {
     public int points = 10;
+
+    void Start()
+    {
+        
+    }
 }
