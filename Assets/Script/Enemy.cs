@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        //Debug.Log(collision.gameObject.name);
         
         if (collision.gameObject.tag == "Bullet"){
             TakeDamage();

@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+
 
 public class LevelControl : MonoBehaviour
 {
+    
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         
     }
 
@@ -17,10 +20,19 @@ public class LevelControl : MonoBehaviour
         
     }
 
-    public void ResetScene()
+
+
+    public void ResetLevel()
     {
-        // Reload the current scene
-        Time.timeScale = 1.0f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void StartLevel(string name) {
+        SceneManager.LoadScene(name);
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.UnloadSceneAsync(currentSceneName);
+
+    }
+
+
 }

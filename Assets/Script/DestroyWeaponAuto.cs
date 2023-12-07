@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DestroyWeaponAuto : MonoBehaviour
 {
+    public float left = -20f;
+    public float right = 10f;
     private Vector3 position;
     // Start is called before the first frame update
     void Start()
@@ -14,7 +16,7 @@ public class DestroyWeaponAuto : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x > 10f || transform.position.x < -20f) {
+        if (transform.position.x > right || transform.position.x < left) {
             Destroy(gameObject);
         }
     }

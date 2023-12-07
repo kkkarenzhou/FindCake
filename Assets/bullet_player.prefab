@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3158386766397163213}
   - component: {fileID: 4403611838169790553}
   m_Layer: 0
-  m_Name: bullet
+  m_Name: bullet_player
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db510eb8a65bc7e419c76b281620c360, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left: -20
+  right: 20
 --- !u!58 &4403611838169790553
 CircleCollider2D:
   m_ObjectHideFlags: 0
