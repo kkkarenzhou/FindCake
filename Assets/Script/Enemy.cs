@@ -7,13 +7,10 @@ public class Enemy : MonoBehaviour
     public Player myplayer;
     public int health = 2;
     void Start(){
-
         
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log(collision.gameObject.name);
-        
         if (collision.gameObject.tag == "Bullet"){
             TakeDamage();
         }

@@ -5,13 +5,15 @@ using UnityEngine;
 public class PlayerShooting : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    private Rigidbody2D myRigidbody2D;
     public float bulletSpeed = 10f;
+    private AudioSource audio;
+    private Rigidbody2D myRigidbody2D;
 
     void Start()
     {
 
         myRigidbody2D = GetComponent<Rigidbody2D>();
+        audio = GetComponent<AudioSource>();
 
 
 
@@ -21,6 +23,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            audio.PlayOneShot(audio.clip);
             Vector3 playerPosition = transform.position;
 
             float playerRotation = myRigidbody2D.transform.eulerAngles.y;

@@ -12,25 +12,30 @@ public class EnemyController : MonoBehaviour
 
     private float timeToFire = 0f;
     private Rigidbody2D myRigidbody2D;
+    private Animator _animator;
 
     void Start()
     {
-
         myRigidbody2D = GetComponent<Rigidbody2D>();
-
-
-
+        _animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
-        
-        Move();
+        bool shooted = _animator.GetBool("Shooted");
+        if (!shooted)
+        { Move();
+        }
 
+       
         
         if (Time.time >= timeToFire)
         {
-            Shoot();
+            if (!shooted)
+            {
+                Shoot();
+            }
+            
             timeToFire = Time.time + 1f / fireRate;
         }
     }
@@ -43,13 +48,12 @@ public class EnemyController : MonoBehaviour
         if (transform.position.x >= 15f)
         {
             transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, 0);
-            
             moveSpeed *= -1f;
         }
         if (transform.position.x <= 2.5f)
             {
+            
             transform.localScale = new Vector3(transform.localScale.x * -1f, transform.localScale.y, 0);
-
             moveSpeed *= -1f;
             }
     }
@@ -86,7 +90,7 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage()
     {
         ColorChanger colorchanger = GetComponent<ColorChanger>();
-        colorchanger.ChangeSpriteColorForDuration(Color.red, 1f);
+        colorchanger.ChangeSpriteColorForDuration(Color.red, 2f);
 
         health = health - 1;
         if (health <= 0)

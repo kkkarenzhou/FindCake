@@ -48,7 +48,6 @@ public class JumpBox : MonoBehaviour
             }
             else {
                 grounded = false;
-            
             }
         
         }
